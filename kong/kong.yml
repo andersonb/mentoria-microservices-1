@@ -1,0 +1,45 @@
+_format_version: "1.1"
+
+services:
+  - name: order-service
+    url: http://localhost:8084
+    routes:
+      - name: order-service
+        paths:
+          - /order-service
+
+  - name: notification-service
+    url: http://localhost:8082
+    routes:
+      - name: notification-service
+        paths:
+          - /notification-service
+
+  - name: user-service
+    url: http://localhost:8083
+    routes:
+      - name: user-service
+        paths:
+          - /user-service
+
+plugins:
+  - name: request-transformer
+    service: user-service
+    config:
+      add:
+        headers:
+          - x-forwarded-prefix:/user-service
+
+  - name: request-transformer
+    service: order-service
+    config:
+      add:
+        headers:
+          - x-forwarded-prefix:/order-service
+
+  - name: request-transformer
+    service: notification-service
+    config:
+      add:
+        headers:
+          - x-forwarded-prefix:/notification-service

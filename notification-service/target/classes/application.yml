@@ -1,0 +1,16 @@
+server:
+  port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+spring:
+  application:
+    name: notification-service
+  data:
+    mongodb:
+      host: mongodb-order
+      database: orderservice
